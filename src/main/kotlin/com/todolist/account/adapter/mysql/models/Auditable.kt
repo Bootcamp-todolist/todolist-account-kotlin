@@ -14,12 +14,10 @@ abstract class Auditable {
     @CreatedDate
     @Column(nullable = false, updatable = false)
     var createdTime: Instant = Instant.now()
-        protected set
 
     @LastModifiedDate
     @Column(nullable = false)
     var updatedTime: Instant = Instant.now()
-        protected set
 
     var createdBy: String? = null
 

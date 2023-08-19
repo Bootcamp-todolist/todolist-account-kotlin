@@ -2,6 +2,7 @@ package com.todolist.account.application
 
 import com.todolist.account.application.models.AdminAccountRegisterCommand
 import com.todolist.account.application.models.AdminLoginCommand
+import com.todolist.account.application.models.PasswordUpdateCommand
 import com.todolist.account.application.models.TokenDTO
 import com.todolist.account.domain.AdminAccount
 import com.todolist.account.domain.AdminAccountService
@@ -40,12 +41,32 @@ class AdminAccountApplicationService(
     fun register(registerCommand: AdminAccountRegisterCommand, userId: String) {
         val username: String = registerCommand.username
         adminAccountService.findByUsername(username)
-            ?.let { throw BusinessException(ErrorMessage.REPEATED_USER_NAME, HttpStatus.BAD_REQUEST) }
+            ?.let {
+                throw BusinessException(
+                    ErrorMessage.REPEATED_USER_NAME,
+                    HttpStatus.BAD_REQUEST
+                )
+            }
 
         val password = passwordEncoder.encode(registerCommand.password)
         val adminAccount =
             AdminAccount(username = username, password = password, createdBy = userId)
 
         adminAccountService.save(adminAccount)
+    }
+
+    fun updatePassword(userId: String, passwordUpdateCommand: PasswordUpdateCommand) {
+        val account = adminAccountService.findById(userId)
+            ?: throw BusinessException(ErrorMessage.USER_NOT_EXIST, HttpStatus.NOT_FOUND)
+        if (!passwordEncoder.matches(passwordUpdateCommand.oldPassword,account.password)) {
+            throw BusinessException(ErrorMessage.OLD_PASSWORD_WRONG, HttpStatus.BAD_REQUEST)
+        }
+
+        adminAccountService.save(
+            account.copy(
+                password = passwordEncoder.encode(
+                    passwordUpdateCommand.newPassword),
+                createdBy = userId)
+        )
     }
 }

@@ -17,4 +17,8 @@ class AdminAccountRepositoryImpl(
         adminAccountJpaRepository.save(AdminAccountPersistModel().fromDomain(adminAccount))
     }
 
+    override fun findById(userId: String): AdminAccount? {
+        return adminAccountJpaRepository.findById(userId).orElse(null)?.toDomain()
+    }
+
 }

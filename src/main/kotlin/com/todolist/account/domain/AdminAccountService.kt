@@ -15,5 +15,9 @@ class AdminAccountService(
         adminAccountRepository.save(adminAccount)
     }
 
+    fun findById(userId: String): AdminAccount? {
+        return adminAccountRepository.findById(userId)
+    }
+
 
 }
