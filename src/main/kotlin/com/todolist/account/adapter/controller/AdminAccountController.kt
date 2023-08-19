@@ -1,18 +1,25 @@
 package com.todolist.account.adapter.controller
 
 import com.todolist.account.application.AdminAccountApplicationService
+import com.todolist.account.application.models.AdminAccountRegisterCommand
 import com.todolist.account.application.models.AdminLoginCommand
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import com.todolist.account.application.models.TokenDTO
+import com.todolist.account.common.Constant.USER_ID
+import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/admin")
 class AdminAccountController(private val adminAccountApplicationService: AdminAccountApplicationService) {
 
     @PostMapping("/login")
-    fun adminLogin(@RequestBody adminLoginCommand: AdminLoginCommand): Any {
+    fun adminLogin(@RequestBody adminLoginCommand: AdminLoginCommand): TokenDTO {
         return adminAccountApplicationService.login(adminLoginCommand)
+    }
+
+    @PostMapping("/register")
+    fun registerAdminAccount(
+        @RequestBody registerCommand: AdminAccountRegisterCommand,
+        @RequestHeader(USER_ID) userId: String) {
+        adminAccountApplicationService.register(registerCommand, userId)
     }
 }

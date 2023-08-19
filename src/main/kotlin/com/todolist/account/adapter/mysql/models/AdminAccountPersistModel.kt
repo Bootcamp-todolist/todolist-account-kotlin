@@ -11,20 +11,32 @@ import org.hibernate.annotations.UuidGenerator
 data class AdminAccountPersistModel(
     @Id
     @UuidGenerator
-    var id: String,
-    val username: String,
-    val password: String,
+    var id: String = "",
+    val username: String = "",
+    val password: String = "",
     @Enumerated(EnumType.STRING)
-    val role: Role
+    val role: Role = Role.ADMIN
 ) : Auditable() {
     fun toDomain() = AdminAccount(
         id = this.id,
-        userRole = this.role,
-        username = this.username ,
-        password = this.password ,
-        createdTime = this.createdTime ,
+        role = this.role,
+        username = this.username,
+        password = this.password,
+        createdTime = this.createdTime,
         createdBy = this.createdBy ?: "",
-        updatedTime = this.updatedTime ,
+        updatedTime = this.updatedTime,
         updatedBy = this.updatedBy ?: ""
     )
+
+    fun fromDomain(domain: AdminAccount): AdminAccountPersistModel {
+        val persistModel = AdminAccountPersistModel(
+            id = domain.id,
+            role = domain.role,
+            username = domain.username,
+            password = domain.password
+        )
+        persistModel.createdBy = domain.createdBy
+        persistModel.updatedBy = domain.updatedBy
+        return persistModel
+    }
 }

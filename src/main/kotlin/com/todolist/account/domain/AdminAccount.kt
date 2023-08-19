@@ -5,19 +5,19 @@ import java.time.Instant
 
 data class AdminAccount(
 
-    val id: String,
+    val id: String = "",
 
-    val userRole: Role,
+    val role: Role = Role.ADMIN,
 
-    val username: String,
+    val username: String = "",
 
-    val password: String,
+    val password: String = "",
 
-    val createdTime: Instant,
+    val createdTime: Instant = Instant.now(),
 
-    val createdBy: String,
+    val createdBy: String = "",
 
-    val updatedTime: Instant,
+    val updatedTime: Instant = Instant.now(),
 
-    val updatedBy: String
+    val updatedBy: String = ""
 )

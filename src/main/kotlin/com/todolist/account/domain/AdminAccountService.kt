@@ -11,6 +11,9 @@ class AdminAccountService(
 
     }
 
+    fun save(adminAccount: AdminAccount) {
+        adminAccountRepository.save(adminAccount)
+    }
 
 
 }
