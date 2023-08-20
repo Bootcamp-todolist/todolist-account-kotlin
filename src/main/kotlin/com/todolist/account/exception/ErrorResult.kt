@@ -5,6 +5,6 @@ data class ErrorResult(
     val errorKey: String,
     val errorMsg: String
 ) {
-    constructor(error: ErrorMessage) : this(error.value, error.value)
+    constructor(error: ErrorMessage) : this(error.name, error.value)
 }
 
