@@ -28,8 +28,6 @@ dependencies {
     implementation("org.springframework.security:spring-security-core:6.1.2")
     implementation("io.github.microutils:kotlin-logging:3.0.5")
     implementation("com.auth0:java-jwt:4.3.0")
-    implementation("org.mapstruct:mapstruct:1.5.3.Final")
-    annotationProcessor("org.mapstruct:mapstruct-processor:1.5.3.Final")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 
