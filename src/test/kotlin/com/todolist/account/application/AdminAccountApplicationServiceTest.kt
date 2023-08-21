@@ -35,7 +35,7 @@ class AdminAccountApplicationServiceTest {
     }
 
     @Test
-    fun testLoginSuccess() {
+    fun `should login success`() {
         val adminAccount = AdminAccount(username = "test", password = "password")
 
         Mockito.`when`(adminAccountService.findByUsername("test")).thenReturn(adminAccount)
@@ -49,7 +49,7 @@ class AdminAccountApplicationServiceTest {
     }
 
     @Test
-    fun testLoginUserNotFound() {
+    fun `should login failed when user not found`() {
         Mockito.`when`(adminAccountService.findByUsername("test")).thenReturn(null)
 
         val loginCommand = AdminLoginCommand(username = "test-unfound", password = "password")
@@ -59,7 +59,7 @@ class AdminAccountApplicationServiceTest {
     }
 
     @Test
-    fun testLoginIncorrectPassword() {
+    fun `should login failed when password incorrect`() {
         val adminAccount = AdminAccount(username = "test", password = "password")
         val loginCommand = AdminLoginCommand(username = "test", password = "wrong-password")
 

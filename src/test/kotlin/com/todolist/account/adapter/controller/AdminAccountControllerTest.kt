@@ -25,7 +25,7 @@ class AdminAccountControllerTest {
     private lateinit var adminAccountApplicationService: AdminAccountApplicationService
 
     @Test
-    fun testAdminLogin() {
+    fun `should login successfully`() {
         val adminLoginCommand = AdminLoginCommand("username", "password")
         val tokenDto = TokenDTO("token")
 
