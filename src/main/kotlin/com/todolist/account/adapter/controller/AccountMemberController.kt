@@ -1,9 +1,9 @@
 package com.todolist.account.adapter.controller
 
+import com.todolist.account.application.MemberAccountApplicationService
 import com.todolist.account.application.models.CreateMemberCommand
 import com.todolist.account.application.models.MemberDTO
 import com.todolist.account.common.Constant.USER_ID
-import com.todolist.account.application.MemberAccountApplicationService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
@@ -24,5 +24,13 @@ class AccountMemberController(
         @RequestHeader(USER_ID) userId: String
     ): MemberDTO {
         return memberAccountApplicationService.createMember(createMemberCommand, userId)
+    }
+
+    @DeleteMapping("/member/{id}")
+    fun deleteMember(
+        @PathVariable("id") memberId: String,
+        @RequestHeader(USER_ID) userId: String
+    ) {
+        memberAccountApplicationService.deleteMember(memberId, userId)
     }
 }

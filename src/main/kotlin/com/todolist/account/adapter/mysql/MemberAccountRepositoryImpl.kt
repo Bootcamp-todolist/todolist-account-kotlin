@@ -22,4 +22,8 @@ class MemberAccountRepositoryImpl(
     override fun findByUsername(username: String): MemberAccount? {
         return memberAccountJpaRepository.findByUsername(username)?.toDomain()
     }
+
+    override fun findById(memberId: String): MemberAccount? {
+        return memberAccountJpaRepository.findById(memberId).orElse(null)?.toDomain()
+    }
 }

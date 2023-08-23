@@ -35,4 +35,14 @@ class MemberAccountApplicationService(
         return MemberDTO().fromDomain(memberAccountService.save(memberAccount))
     }
 
+    fun deleteMember(memberId: String, userId: String) {
+        val memberAccount: MemberAccount? = memberAccountService.findById(memberId)
+        requireNotNull(memberAccount) {
+            throw BusinessException(ErrorMessage.USER_NOT_EXIST, HttpStatus.NOT_FOUND)
+        }
+        memberAccount.deleted = true
+        memberAccount.updatedBy = userId
+        memberAccountService.save(memberAccount)
+    }
+
 }

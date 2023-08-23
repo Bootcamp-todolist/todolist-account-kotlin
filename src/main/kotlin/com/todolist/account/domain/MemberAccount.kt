@@ -13,7 +13,7 @@ data class MemberAccount (
 
     val password: String = "",
 
-    val deleted: Boolean = false,
+    var deleted: Boolean = false,
 
     val createdTime: Instant = Instant.now(),
 
@@ -21,5 +21,5 @@ data class MemberAccount (
 
     val updatedTime: Instant = Instant.now(),
 
-    val updatedBy: String = ""
+    var updatedBy: String = ""
 )

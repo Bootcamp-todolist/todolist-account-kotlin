@@ -18,5 +18,9 @@ class MemberAccountService(
         return memberAccountRepository.findByUsername(username)
     }
 
+    fun findById(memberId: String): MemberAccount? {
+        return memberAccountRepository.findById(memberId)
+    }
+
 
 }
