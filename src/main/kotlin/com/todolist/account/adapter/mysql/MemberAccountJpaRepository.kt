@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 
 interface MemberAccountJpaRepository : JpaRepository<MemberAccountPersistModel,String> {
     fun findByDeletedFalse(): List<MemberAccountPersistModel>
+    fun findByUsername(username: String): MemberAccountPersistModel?
 
 }

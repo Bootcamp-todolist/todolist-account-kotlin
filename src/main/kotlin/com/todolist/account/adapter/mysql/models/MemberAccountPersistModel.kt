@@ -34,4 +34,19 @@ data class MemberAccountPersistModel(
         updatedBy = this.updatedBy ?: ""
     )
 
+    companion object {
+        fun fromDomain(domain: MemberAccount): MemberAccountPersistModel {
+            val persistModel = MemberAccountPersistModel(
+                id = domain.id,
+                role = domain.role,
+                username = domain.username,
+                password = domain.password,
+                deleted = domain.deleted
+            )
+            persistModel.createdBy = domain.createdBy
+            persistModel.updatedBy = domain.updatedBy
+            return persistModel
+        }
+    }
+
 }
