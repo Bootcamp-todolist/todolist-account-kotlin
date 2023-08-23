@@ -29,6 +29,7 @@ dependencies {
     implementation("io.github.microutils:kotlin-logging:3.0.5")
     implementation("com.auth0:java-jwt:4.3.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation ("org.mockito.kotlin:mockito-kotlin:5.1.0")
 }
 
 tasks.withType<KotlinCompile> {
