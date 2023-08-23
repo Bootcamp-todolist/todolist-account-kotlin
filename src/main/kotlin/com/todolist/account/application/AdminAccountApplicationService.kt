@@ -12,6 +12,7 @@ import com.todolist.account.utils.TokenUtil
 import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
+import java.util.Objects
 
 @Service
 class AdminAccountApplicationService(
@@ -40,13 +41,10 @@ class AdminAccountApplicationService(
 
     fun register(registerCommand: AdminAccountRegisterCommand, userId: String) {
         val username: String = registerCommand.username
-        adminAccountService.findByUsername(username)
-            ?.let {
-                throw BusinessException(
-                    ErrorMessage.REPEATED_USER_NAME,
-                    HttpStatus.BAD_REQUEST
-                )
-            }
+        val account = adminAccountService.findByUsername(username)
+        if (Objects.nonNull(account)) {
+            throw BusinessException(ErrorMessage.REPEATED_USER_NAME, HttpStatus.BAD_REQUEST)
+        }
 
         val password = passwordEncoder.encode(registerCommand.password)
         val adminAccount =
@@ -58,7 +56,7 @@ class AdminAccountApplicationService(
     fun updatePassword(userId: String, passwordUpdateCommand: PasswordUpdateCommand) {
         val account = adminAccountService.findById(userId)
             ?: throw BusinessException(ErrorMessage.USER_NOT_EXIST, HttpStatus.NOT_FOUND)
-        if (!passwordEncoder.matches(passwordUpdateCommand.oldPassword,account.password)) {
+        if (!passwordEncoder.matches(passwordUpdateCommand.oldPassword, account.password)) {
             throw BusinessException(ErrorMessage.OLD_PASSWORD_WRONG, HttpStatus.BAD_REQUEST)
         }
 
@@ -66,7 +64,8 @@ class AdminAccountApplicationService(
             account.copy(
                 password = passwordEncoder.encode(
                     passwordUpdateCommand.newPassword),
-                createdBy = userId)
+                createdBy = userId
+            )
         )
     }
 }
