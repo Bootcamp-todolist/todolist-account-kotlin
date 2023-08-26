@@ -16,6 +16,7 @@ import org.mockito.kotlin.any
 import org.mockito.kotlin.doReturn
 import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import java.time.Instant
 
 class MemberAccountApplicationServiceTest {
     @InjectMocks
@@ -44,9 +45,15 @@ class MemberAccountApplicationServiceTest {
             username = username,
             password = "password")
         val memberAccount = MemberAccount(
-            username = username,
-            password = password,
-            createdBy = admin)
+            id = "id",
+            username = "username",
+            password = "password",
+            deleted = false,
+            createdBy = admin,
+            createdTime = Instant.now(),
+            updatedBy = "test",
+            updatedTime = Instant.now()
+        )
 
         `when`(memberAccountService.save(any())).thenReturn(memberAccount)
         `when`(passwordEncoder.encode(any())).thenReturn(password)
@@ -62,17 +69,19 @@ class MemberAccountApplicationServiceTest {
         val username = "user"
         val admin = "admin"
         val password = "encode-password"
-        val memberAccount1 = MemberAccount(
-            username = username,
-            password = password,
-            createdBy = admin
-        )
-        val memberAccount2 = MemberAccount(
-            username = username,
-            password = password,
-            createdBy = admin
-        )
-        val memberAccounts = listOf(memberAccount1, memberAccount2)
+        val memberAccounts = List(2) {
+            MemberAccount(
+                id = "id",
+                username = username,
+                password = password,
+                deleted = false,
+                createdBy = admin,
+                createdTime = Instant.now(),
+                updatedBy = "test",
+                updatedTime = Instant.now()
+            )
+        }
+
         Mockito.doReturn(memberAccounts).`when`(memberAccountService).findAll()
         val allMembers: List<MemberDTO> = memberAccountApplicationService.getAllMembers()
         assertThat(allMembers).usingRecursiveComparison()
@@ -81,16 +90,19 @@ class MemberAccountApplicationServiceTest {
     }
 
     @Test
-    fun `should set deleted true when delete member`() {
+    fun `should deleted member successfully`() {
         val captor: ArgumentCaptor<MemberAccount> = ArgumentCaptor.forClass(MemberAccount::class.java)
         val id = "123"
         val admin = "admin"
         val memberAccount = MemberAccount(
+            id = "id",
             username = "username",
             password = "password",
-            createdBy = admin,
             deleted = false,
-            updatedBy = "test"
+            createdBy = admin,
+            createdTime = Instant.now(),
+            updatedBy = "test",
+            updatedTime = Instant.now()
         )
 
         doReturn(memberAccount).`when`(memberAccountService).findById(id)

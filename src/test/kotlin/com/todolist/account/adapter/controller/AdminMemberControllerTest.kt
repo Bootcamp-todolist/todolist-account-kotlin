@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers
 import org.mockito.Mockito
+import org.mockito.kotlin.any
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
@@ -35,8 +36,10 @@ class AdminMemberControllerTest {
         )
         val admin = "admin"
         val memberAccount = MemberDTO()
+
         Mockito.`when`(memberAccountApplicationService.createMember(command, admin))
             .thenReturn(memberAccount)
+
         mockMvc.perform(
             MockMvcRequestBuilders.post("/admin/member")
                 .header(USER_ID, admin)
@@ -45,7 +48,7 @@ class AdminMemberControllerTest {
         )
             .andExpect(MockMvcResultMatchers.status().isCreated)
         Mockito.verify(memberAccountApplicationService).createMember(
-            ArgumentMatchers.any(),
+            any(),
             ArgumentMatchers.anyString()
         )
     }
@@ -61,6 +64,7 @@ class AdminMemberControllerTest {
     fun should_delete_member_successfully() {
         Mockito.doNothing().`when`(memberAccountApplicationService)
             .deleteMember(ArgumentMatchers.anyString(), ArgumentMatchers.anyString())
+
         mockMvc.perform(
             MockMvcRequestBuilders.delete("/admin/member/1")
                 .header(USER_ID, "admin")
