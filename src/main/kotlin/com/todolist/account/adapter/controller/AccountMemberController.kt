@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/admin")
-class AdminMemberontroller(
+class AdminMemberController(
     private val memberAccountApplicationService: MemberAccountApplicationService
 ) {
     @GetMapping("/members")
