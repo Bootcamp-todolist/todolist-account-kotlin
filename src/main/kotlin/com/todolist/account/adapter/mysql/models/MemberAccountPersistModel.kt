@@ -12,16 +12,14 @@ import org.hibernate.annotations.UuidGenerator
 @Table(name = "member_account")
 data class MemberAccountPersistModel(
     @Id @UuidGenerator
-    private var id: String = "",
-    private val username: String = "" ,
-    private val password: String = "" ,
-    private val deleted: Boolean = false,
+    private var id: String,
+    private val username: String,
+    private val password: String,
+    private val deleted: Boolean,
     @Enumerated(jakarta.persistence.EnumType.STRING)
     private val role: Role = Role.MEMBER
 ) : Auditable() {
-    fun toDomainList(persistModels: List<MemberAccountPersistModel>): List<MemberAccount> {
-        return persistModels.map { it.toDomain() }
-    }
+
     fun toDomain() = MemberAccount(
         id = this.id,
         role = this.role,
