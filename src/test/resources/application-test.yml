@@ -1,15 +1,27 @@
+#spring:
+#  flyway:
+#    enabled: true
+#    url: jdbc:mysql://localhost:3306/todolist-account?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&connectionCollation=utf8mb4_bin&useServerPrepStmts=false&rewriteBatchedStatements=true&createDatabaseIfNotExist=true
+#    user: root
+#    password: changeme
+#  datasource:
+#    url:
+#    username:
+#    password:
+#  jpa:
+#    database-platform: org.hibernate.dialect.MySQLDialect
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: validate
+
+#spring:
+#  autoconfigure:
+#    exclude:
+#      - org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+
 spring:
-  flyway:
-    enabled: true
-    url: jdbc:mysql://localhost:3306/todolist-account?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&connectionCollation=utf8mb4_bin&useServerPrepStmts=false&rewriteBatchedStatements=true&createDatabaseIfNotExist=true
-    user: root
-    password: changeme
   datasource:
-    url: jdbc:mysql://localhost:3306/todolist-account
-    username: root
-    password: changeme
-  jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
-    show-sql: true
-    hibernate:
-      ddl-auto: validate
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password:
