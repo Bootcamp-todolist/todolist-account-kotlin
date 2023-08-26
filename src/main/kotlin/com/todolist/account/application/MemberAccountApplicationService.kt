@@ -9,6 +9,7 @@ import com.todolist.account.exception.ErrorMessage
 import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
+import java.time.Instant
 import java.util.*
 
 @Service
@@ -30,7 +31,15 @@ class MemberAccountApplicationService(
 
         val password = passwordEncoder.encode(createMemberCommand.password)
         val memberAccount =
-            MemberAccount(username = username, password = password, createdBy = userId)
+            MemberAccount(
+                id = "id",
+                username = username,
+                password = password,
+                createdBy = userId,
+                createdTime = Instant.now(),
+                updatedBy = "test",
+                updatedTime = Instant.now()
+            )
 
         return MemberDTO().fromDomain(memberAccountService.save(memberAccount))
     }
