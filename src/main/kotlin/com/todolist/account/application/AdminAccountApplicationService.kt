@@ -12,6 +12,7 @@ import com.todolist.account.utils.TokenUtil
 import org.springframework.http.HttpStatus
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
+import java.time.Instant
 import java.util.Objects
 
 @Service
@@ -47,8 +48,14 @@ class AdminAccountApplicationService(
         }
 
         val password = passwordEncoder.encode(registerCommand.password)
-        val adminAccount =
-            AdminAccount(username = username, password = password, createdBy = userId)
+        val adminAccount = AdminAccount(
+            username = "test",
+            password = password,
+            createdTime = Instant.now(),
+            createdBy = "test",
+            updatedTime = Instant.now(),
+            updatedBy = "test"
+        )
 
         adminAccountService.save(adminAccount)
     }

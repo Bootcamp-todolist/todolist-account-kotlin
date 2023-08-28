@@ -14,6 +14,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import java.time.Instant
 
 class AdminAccountApplicationServiceTest {
 
@@ -36,11 +37,19 @@ class AdminAccountApplicationServiceTest {
 
     @Test
     fun `should login success`() {
-        val adminAccount = AdminAccount(username = "test", password = "password")
+        val adminAccount = AdminAccount(
+            username = "test",
+            password = "password",
+            createdTime = Instant.now(),
+            createdBy = "test",
+            updatedTime = Instant.now(),
+            updatedBy = "test"
+        )
 
         Mockito.`when`(adminAccountService.findByUsername("test")).thenReturn(adminAccount)
         Mockito.`when`(passwordEncoder.matches("password", adminAccount.password)).thenReturn(true)
-        Mockito.`when`(tokenUtil.generateToken(adminAccount.id, adminAccount.role)).thenReturn("mocked-token")
+        Mockito.`when`(tokenUtil.generateToken(adminAccount.id, adminAccount.role))
+            .thenReturn("mocked-token")
 
         val loginCommand = AdminLoginCommand(username = "test", password = "password")
         val result = adminAccountApplicationService.login(loginCommand)
@@ -60,11 +69,19 @@ class AdminAccountApplicationServiceTest {
 
     @Test
     fun `should login failed when password incorrect`() {
-        val adminAccount = AdminAccount(username = "test", password = "password")
+        val adminAccount = AdminAccount(
+            username = "test",
+            password = "password",
+            createdTime = Instant.now(),
+            createdBy = "test",
+            updatedTime = Instant.now(),
+            updatedBy = "test"
+        )
         val loginCommand = AdminLoginCommand(username = "test", password = "wrong-password")
 
         Mockito.`when`(adminAccountService.findByUsername("test")).thenReturn(adminAccount)
-        Mockito.`when`(passwordEncoder.matches("wrong-password", adminAccount.password)).thenReturn(false)
+        Mockito.`when`(passwordEncoder.matches("wrong-password", adminAccount.password))
+            .thenReturn(false)
 
         assertThrows(BusinessException::class.java) {
             adminAccountApplicationService.login(loginCommand)
