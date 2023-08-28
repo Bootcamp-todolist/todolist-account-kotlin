@@ -28,7 +28,6 @@ dependencies {
     implementation("org.springframework.security:spring-security-core:6.1.2")
     implementation("io.github.microutils:kotlin-logging:3.0.5")
     implementation("com.auth0:java-jwt:4.3.0")
-    implementation("mysql:mysql-connector-java:8.0.33")
     testImplementation("com.h2database:h2:2.2.220")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation ("org.mockito.kotlin:mockito-kotlin:5.1.0")

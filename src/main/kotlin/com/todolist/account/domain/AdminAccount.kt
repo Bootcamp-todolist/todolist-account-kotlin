@@ -9,15 +9,15 @@ data class AdminAccount(
 
     val role: Role = Role.ADMIN,
 
-    val username: String = "",
+    val username: String,
 
-    val password: String = "",
+    val password: String,
 
-    val createdTime: Instant = Instant.now(),
+    val createdTime: Instant,
 
-    val createdBy: String = "",
+    val createdBy: String,
 
-    val updatedTime: Instant = Instant.now(),
+    val updatedTime: Instant,
 
-    val updatedBy: String = ""
+    val updatedBy: String
 )
