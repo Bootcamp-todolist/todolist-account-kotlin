@@ -49,8 +49,7 @@ class MemberAccountApplicationService(
         requireNotNull(memberAccount) {
             throw BusinessException(ErrorMessage.USER_NOT_EXIST, HttpStatus.NOT_FOUND)
         }
-        memberAccount.deleted = true
-        memberAccount.updatedBy = userId
+        memberAccount.deleteMember(userId)
         memberAccountService.save(memberAccount)
     }
 

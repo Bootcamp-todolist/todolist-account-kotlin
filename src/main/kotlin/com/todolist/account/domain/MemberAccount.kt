@@ -3,7 +3,7 @@ package com.todolist.account.domain
 import com.todolist.account.domain.enum.Role
 import java.time.Instant
 
-data class MemberAccount (
+data class MemberAccount(
 
     val id: String,
 
@@ -22,4 +22,9 @@ data class MemberAccount (
     val updatedTime: Instant,
 
     var updatedBy: String
-)
+) {
+    fun deleteMember(userId: String) {
+        this.deleted = true
+        this.updatedBy = userId
+    }
+}
